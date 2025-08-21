@@ -28,7 +28,7 @@ class Holdscribe < Formula
       
       # Function to check and request accessibility permissions
       check_accessibility() {
-        python3 -c "
+        "#{libexec}/bin/python" -c "
 import subprocess
 import sys
 import os
