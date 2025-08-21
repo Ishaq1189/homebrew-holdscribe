@@ -19,13 +19,13 @@ class Holdscribe < Formula
     system libexec/"bin/pip", "install", "pynput>=1.7.6"
     system libexec/"bin/pip", "install", "pyperclip>=1.8.2"
     
-    # Install the package itself
-    system libexec/"bin/pip", "install", "."
+    # Copy the main script to the virtual environment
+    (libexec/"bin/holdscribe.py").write(File.read("holdscribe.py"))
     
     # Create wrapper script
-    (bin/"holdscribe").write_text(<<~EOS)
+    (bin/"holdscribe").write(<<~EOS)
       #!/bin/bash
-      exec "#{libexec}/bin/python" -m holdscribe "$@"
+      exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
   end
 
