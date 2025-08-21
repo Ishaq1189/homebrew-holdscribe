@@ -27,6 +27,37 @@ class Holdscribe < Formula
       #!/bin/bash
       exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
+    
+    # Create launchd plist for background service
+    (prefix/"homebrew.ishaq1189.holdscribe.plist").write(<<~EOS)
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+        <key>Label</key>
+        <string>homebrew.ishaq1189.holdscribe</string>
+        <key>ProgramArguments</key>
+        <array>
+          <string>#{opt_bin}/holdscribe</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>KeepAlive</key>
+        <true/>
+        <key>StandardOutPath</key>
+        <string>#{var}/log/holdscribe.log</string>
+        <key>StandardErrorPath</key>
+        <string>#{var}/log/holdscribe.log</string>
+      </dict>
+      </plist>
+    EOS
+  end
+
+  service do
+    run [opt_bin/"holdscribe"]
+    keep_alive true
+    log_path var/"log/holdscribe.log"
+    error_log_path var/"log/holdscribe.log"
   end
 
   def caveats
@@ -38,12 +69,18 @@ class Holdscribe < Formula
       2. Click '+' and add your terminal application (Terminal.app, iTerm2, etc.)
       3. Enable the checkbox for your terminal
       
-      Usage:
+      To run HoldScribe as a background service:
+        brew services start ishaq1189/holdscribe/holdscribe
+
+      To stop the background service:
+        brew services stop ishaq1189/holdscribe/holdscribe
+
+      Manual usage:
         holdscribe                    # Use Right Alt key (default)
-        holdscribe --key f8          # Use F8 key
+        holdscribe --key f8          # Use F8 key  
         holdscribe --model tiny      # Use faster model
-      
-      Hold the key, speak, release to transcribe and paste!
+
+      Hold the Right Alt key, speak, release to transcribe and paste!
     EOS
   end
 
