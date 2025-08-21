@@ -64,10 +64,12 @@ class Holdscribe < Formula
     <<~EOS
       HoldScribe requires accessibility permissions to monitor keyboard input.
       
-      Grant permissions:
+      Grant permissions for background service:
       1. Open System Settings > Privacy & Security > Accessibility
-      2. Click '+' and add your terminal application (Terminal.app, iTerm2, etc.)
-      3. Enable the checkbox for your terminal
+      2. Click '+' and add: #{Formula["python@3.11"].opt_prefix}/Frameworks/Python.framework/Versions/3.11/Resources/Python.app
+      3. Enable the checkbox for Python.app
+      
+      For manual usage, also add your terminal application (Terminal.app, iTerm2, etc.)
       
       To run HoldScribe as a background service:
         brew services start ishaq1189/holdscribe/holdscribe
