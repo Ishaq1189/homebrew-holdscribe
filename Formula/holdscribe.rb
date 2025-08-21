@@ -22,9 +22,54 @@ class Holdscribe < Formula
     # Copy the main script to the virtual environment
     (libexec/"bin/holdscribe.py").write(File.read("holdscribe.py"))
     
-    # Create wrapper script
+    # Create wrapper script with automatic permission request
     (bin/"holdscribe").write(<<~EOS)
       #!/bin/bash
+      
+      # Function to check and request accessibility permissions
+      check_accessibility() {
+        python3 -c "
+import subprocess
+import sys
+import os
+
+# Check if we have accessibility permissions
+try:
+    from pynput import keyboard
+    # Try to create a listener to test permissions
+    listener = keyboard.Listener(on_press=lambda key: None)
+    listener.start()
+    listener.stop()
+    print('✅ Accessibility permissions granted')
+except Exception as e:
+    if 'not trusted' in str(e).lower():
+        print('⚠️  Accessibility permissions required')
+        print('Opening System Settings...')
+        
+        # Get Python executable path
+        python_path = '#{Formula["python@3.11"].opt_prefix}/Frameworks/Python.framework/Versions/3.11/Resources/Python.app'
+        
+        # Open System Settings to Accessibility
+        subprocess.run(['open', 'x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility'])
+        
+        print(f'Please add this application to accessibility:')
+        print(f'{python_path}')
+        print()
+        print('1. Click the lock 🔒 and authenticate')
+        print('2. Click + and navigate to the path above')  
+        print('3. Enable the checkbox for Python.app')
+        print('4. Run this command again')
+        sys.exit(1)
+    else:
+        print(f'Error: {e}')
+        sys.exit(1)
+"
+      }
+      
+      # Check permissions before running
+      check_accessibility || exit 1
+      
+      # Run HoldScribe
       exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
     
@@ -62,27 +107,26 @@ class Holdscribe < Formula
 
   def caveats
     <<~EOS
-      HoldScribe requires accessibility permissions to monitor keyboard input.
+      🎤 HoldScribe is ready to use!
       
-      Grant permissions for background service:
-      1. Open System Settings > Privacy & Security > Accessibility
-      2. Click '+' and add: #{Formula["python@3.11"].opt_prefix}/Frameworks/Python.framework/Versions/3.11/Resources/Python.app
-      3. Enable the checkbox for Python.app
+      On first run, HoldScribe will automatically:
+      • Check accessibility permissions
+      • Open System Settings if permissions needed
+      • Guide you through the one-time setup
       
-      For manual usage, also add your terminal application (Terminal.app, iTerm2, etc.)
-      
-      To run HoldScribe as a background service:
+      To run as background service (recommended):
         brew services start ishaq1189/holdscribe/holdscribe
-
-      To stop the background service:
-        brew services stop ishaq1189/holdscribe/holdscribe
-
-      Manual usage:
+        
+      To run manually:
         holdscribe                    # Use Right Alt key (default)
         holdscribe --key f8          # Use F8 key  
         holdscribe --model tiny      # Use faster model
 
       Hold the Right Alt key, speak, release to transcribe and paste!
+      
+      Service management:
+        brew services stop ishaq1189/holdscribe/holdscribe    # Stop service
+        brew services restart ishaq1189/holdscribe/holdscribe # Restart service
     EOS
   end
 
