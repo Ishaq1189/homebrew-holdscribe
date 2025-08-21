@@ -10,11 +10,23 @@ class Holdscribe < Formula
   depends_on "ffmpeg"
 
   def install
-    # Install Python package
-    system "python3.11", "-m", "pip", "install", *std_pip_args, "."
+    # Install using Python's built-in venv and pip
+    system "python3.11", "-m", "venv", libexec
     
-    # Install the main script
-    bin.install "holdscribe.py" => "holdscribe"
+    # Install dependencies in the virtual environment
+    system libexec/"bin/pip", "install", "openai-whisper>=20240930"
+    system libexec/"bin/pip", "install", "pyaudio>=0.2.11"
+    system libexec/"bin/pip", "install", "pynput>=1.7.6"
+    system libexec/"bin/pip", "install", "pyperclip>=1.8.2"
+    
+    # Install the package itself
+    system libexec/"bin/pip", "install", "."
+    
+    # Create wrapper script
+    (bin/"holdscribe").write_text(<<~EOS)
+      #!/bin/bash
+      exec "#{libexec}/bin/python" -m holdscribe "$@"
+    EOS
   end
 
   def caveats
