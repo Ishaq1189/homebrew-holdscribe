@@ -86,7 +86,8 @@ except Exception as e:
         <string>homebrew.ishaq1189.holdscribe</string>
         <key>ProgramArguments</key>
         <array>
-          <string>#{opt_bin}/holdscribe</string>
+          <string>#{libexec}/bin/python</string>
+          <string>#{libexec}/bin/holdscribe.py</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
@@ -102,7 +103,7 @@ except Exception as e:
   end
 
   service do
-    run [opt_bin/"holdscribe"]
+    run [libexec/"bin/python", libexec/"bin/holdscribe.py"]
     keep_alive true
     log_path var/"log/holdscribe.log"
     error_log_path var/"log/holdscribe.log"
@@ -112,24 +113,29 @@ except Exception as e:
     <<~EOS
       🎤 HoldScribe is ready to use!
       
-      On first run, HoldScribe will automatically:
-      • Check accessibility permissions
-      • Open System Settings if permissions needed
-      • Guide you through the one-time setup
+      IMPORTANT: First-time setup required for accessibility permissions:
       
-      To run as background service (recommended):
-        brew services start ishaq1189/holdscribe/holdscribe
-        
-      To run manually:
+      1. Run interactive setup once:
+         holdscribe
+         
+      2. Grant accessibility permissions when prompted
+      
+      3. Start background service:
+         brew services start ishaq1189/holdscribe/holdscribe
+      
+      Manual usage:
         holdscribe                    # Use Right Alt key (default)
         holdscribe --key f8          # Use F8 key  
         holdscribe --model tiny      # Use faster model
 
-      Hold the Right Alt key, speak, release to transcribe and paste!
-      
       Service management:
         brew services stop ishaq1189/holdscribe/holdscribe    # Stop service
         brew services restart ishaq1189/holdscribe/holdscribe # Restart service
+        
+      If permissions get stuck in a loop, reset with:
+        tccutil reset Accessibility
+        
+      Hold the Right Alt key, speak, release to transcribe and paste!
     EOS
   end
 
