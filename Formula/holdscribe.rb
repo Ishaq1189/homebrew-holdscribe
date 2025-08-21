@@ -73,6 +73,9 @@ except Exception as e:
       exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
     
+    # Make wrapper script executable
+    (bin/"holdscribe").chmod(0755)
+    
     # Create launchd plist for background service
     (prefix/"homebrew.ishaq1189.holdscribe.plist").write(<<~EOS)
       <?xml version="1.0" encoding="UTF-8"?>
