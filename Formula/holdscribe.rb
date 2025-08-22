@@ -170,9 +170,9 @@ except Exception as e:
       
       #{Tty.green}2.#{Tty.reset} Grant accessibility permissions when prompted
       
-      #{Tty.green}3.#{Tty.reset} #{Tty.bold}Run in background:#{Tty.reset}
+      #{Tty.green}3.#{Tty.reset} #{Tty.bold}Run in background (keeps running):#{Tty.reset}
          #{Tty.yellow}holdscribe &#{Tty.reset}
-         # This keeps it running while you use other apps
+         # Auto-detects background mode, disables ESC exit
       
       #{Tty.bold}#{Tty.blue}USAGE:#{Tty.reset}
         #{Tty.cyan}holdscribe#{Tty.reset}                    # Interactive mode (Right Alt key)
