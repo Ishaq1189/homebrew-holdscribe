@@ -172,7 +172,7 @@ except Exception as e:
       
       #{Tty.green}3.#{Tty.reset} #{Tty.bold}Run in background:#{Tty.reset}
          #{Tty.yellow}holdscribe &#{Tty.reset}
-         #{Tty.dim}# This keeps it running while you use other apps#{Tty.reset}
+         # This keeps it running while you use other apps
       
       #{Tty.bold}#{Tty.blue}USAGE:#{Tty.reset}
         #{Tty.cyan}holdscribe#{Tty.reset}                    # Interactive mode (Right Alt key)
@@ -181,12 +181,12 @@ except Exception as e:
         #{Tty.cyan}holdscribe &#{Tty.reset}                 # #{Tty.bold}Background mode (recommended)#{Tty.reset}
       
       #{Tty.bold}#{Tty.magenta}💡 PRO TIP:#{Tty.reset} Add to your shell profile:
-         #{Tty.dim}echo "alias hs='holdscribe &'" >> ~/.zshrc#{Tty.reset}
-         #{Tty.dim}# Then just run: hs#{Tty.reset}
+         echo "alias hs='holdscribe &'" >> ~/.zshrc
+         # Then just run: hs
       
       #{Tty.red}Hold the Right Alt key, speak, release to transcribe and paste!#{Tty.reset}
       
-      #{Tty.dim}Stop background: killall Python#{Tty.reset}
+      Stop background: killall Python
     EOS
   end
 
