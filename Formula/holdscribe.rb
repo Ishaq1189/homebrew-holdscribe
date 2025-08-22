@@ -171,17 +171,17 @@ except Exception as e:
       #{Tty.green}2.#{Tty.reset} Grant accessibility permissions when prompted
       
       #{Tty.green}3.#{Tty.reset} #{Tty.bold}Run in background (keeps running):#{Tty.reset}
-         #{Tty.yellow}holdscribe &#{Tty.reset}
-         # Auto-detects background mode, disables ESC exit
+         #{Tty.yellow}holdscribe --background#{Tty.reset}
+         # Disables ESC exit, runs continuously
       
       #{Tty.bold}#{Tty.blue}USAGE:#{Tty.reset}
         #{Tty.cyan}holdscribe#{Tty.reset}                    # Interactive mode (Right Alt key)
         #{Tty.cyan}holdscribe --key f8#{Tty.reset}          # Use F8 key instead
         #{Tty.cyan}holdscribe --model tiny#{Tty.reset}      # Faster/smaller AI model
-        #{Tty.cyan}holdscribe &#{Tty.reset}                 # #{Tty.bold}Background mode (recommended)#{Tty.reset}
+        #{Tty.cyan}holdscribe --background#{Tty.reset}      # #{Tty.bold}Background mode (recommended)#{Tty.reset}
       
       #{Tty.bold}#{Tty.magenta}💡 PRO TIP:#{Tty.reset} Add to your shell profile:
-         echo "alias hs='holdscribe &'" >> ~/.zshrc
+         echo "alias hs='holdscribe --background'" >> ~/.zshrc
          # Then just run: hs
       
       #{Tty.red}Hold the Right Alt key, speak, release to transcribe and paste!#{Tty.reset}
