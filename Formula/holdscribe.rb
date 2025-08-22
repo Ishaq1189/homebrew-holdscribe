@@ -162,34 +162,31 @@ except Exception as e:
 
   def caveats
     <<~EOS
-      🎤 HoldScribe is ready to use!
+      🎤 #{Tty.bold}#{Tty.green}HoldScribe is ready to use!#{Tty.reset}
       
-      SETUP: Grant accessibility permissions to HoldScribe.app:
+      #{Tty.bold}#{Tty.blue}QUICK START:#{Tty.reset}
+      #{Tty.green}1.#{Tty.reset} Run HoldScribe (automatic permission setup):
+         #{Tty.cyan}holdscribe#{Tty.reset}
       
-      1. Run HoldScribe.app once to register permissions:
-         open "#{opt_prefix}/HoldScribe.app"
-         
-      2. Grant accessibility permissions when prompted:
-         System Settings → Privacy & Security → Accessibility
-         Add HoldScribe.app and enable it
+      #{Tty.green}2.#{Tty.reset} Grant accessibility permissions when prompted
       
-      3. Start background service:
-         brew services start ishaq1189/holdscribe/holdscribe
+      #{Tty.green}3.#{Tty.reset} #{Tty.bold}Run in background:#{Tty.reset}
+         #{Tty.yellow}holdscribe &#{Tty.reset}
+         #{Tty.dim}# This keeps it running while you use other apps#{Tty.reset}
       
-      Usage options:
-        holdscribe                    # Command line (Right Alt key)
-        holdscribe --key f8          # Use F8 key  
-        holdscribe --model tiny      # Faster model
-        open "#{opt_prefix}/HoldScribe.app"  # App bundle (persistent permissions)
-
-      Service management:
-        brew services stop ishaq1189/holdscribe/holdscribe    # Stop service
-        brew services restart ishaq1189/holdscribe/holdscribe # Restart service
-        
-      If permissions get stuck, reset with:
-        tccutil reset Accessibility
-        
-      Hold the Right Alt key, speak, release to transcribe and paste!
+      #{Tty.bold}#{Tty.blue}USAGE:#{Tty.reset}
+        #{Tty.cyan}holdscribe#{Tty.reset}                    # Interactive mode (Right Alt key)
+        #{Tty.cyan}holdscribe --key f8#{Tty.reset}          # Use F8 key instead
+        #{Tty.cyan}holdscribe --model tiny#{Tty.reset}      # Faster/smaller AI model
+        #{Tty.cyan}holdscribe &#{Tty.reset}                 # #{Tty.bold}Background mode (recommended)#{Tty.reset}
+      
+      #{Tty.bold}#{Tty.magenta}💡 PRO TIP:#{Tty.reset} Add to your shell profile:
+         #{Tty.dim}echo "alias hs='holdscribe &'" >> ~/.zshrc#{Tty.reset}
+         #{Tty.dim}# Then just run: hs#{Tty.reset}
+      
+      #{Tty.red}Hold the Right Alt key, speak, release to transcribe and paste!#{Tty.reset}
+      
+      #{Tty.dim}Stop background: killall Python#{Tty.reset}
     EOS
   end
 
