@@ -138,7 +138,7 @@ except Exception as e:
         <string>homebrew.ishaq1189.holdscribe</string>
         <key>ProgramArguments</key>
         <array>
-          <string>#{prefix}/HoldScribe.app/Contents/MacOS/HoldScribe</string>
+          <string>#{opt_prefix}/HoldScribe.app/Contents/MacOS/HoldScribe</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
@@ -154,7 +154,7 @@ except Exception as e:
   end
 
   service do
-    run [prefix/"HoldScribe.app/Contents/MacOS/HoldScribe"]
+    run [opt_prefix/"HoldScribe.app/Contents/MacOS/HoldScribe"]
     keep_alive true
     log_path var/"log/holdscribe.log"
     error_log_path var/"log/holdscribe.log"
@@ -167,7 +167,7 @@ except Exception as e:
       SETUP: Grant accessibility permissions to HoldScribe.app:
       
       1. Run HoldScribe.app once to register permissions:
-         open "#{prefix}/HoldScribe.app"
+         open "#{opt_prefix}/HoldScribe.app"
          
       2. Grant accessibility permissions when prompted:
          System Settings → Privacy & Security → Accessibility
@@ -180,7 +180,7 @@ except Exception as e:
         holdscribe                    # Command line (Right Alt key)
         holdscribe --key f8          # Use F8 key  
         holdscribe --model tiny      # Faster model
-        open "#{prefix}/HoldScribe.app"  # App bundle (persistent permissions)
+        open "#{opt_prefix}/HoldScribe.app"  # App bundle (persistent permissions)
 
       Service management:
         brew services stop ishaq1189/holdscribe/holdscribe    # Stop service
