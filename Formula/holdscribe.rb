@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.4.tar.gz"
-  sha256 "1ddbc0624292d460fe3e50f116638cbf912d8fec503f0c9a3ebf1f04b3da23e0"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.5.tar.gz"
+  sha256 "4ec86a16a9bebc22a66946063a5f405f10ccd8795d7409026798dcf33022d82e"
   license "MIT"
-  version "1.3.4"
+  version "1.3.5"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -95,11 +95,21 @@ except Exception as e:
       exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
     
-    # Make wrapper script executable using system command (Homebrew chmod sometimes fails)  
+    # Make wrapper script executable - use multiple methods to ensure it works
+    chmod 0755, bin/"holdscribe"
+    system "chmod", "755", bin/"holdscribe"
     system "chmod", "+x", bin/"holdscribe"
+    
+    # Verify the file was made executable
+    unless File.executable?(bin/"holdscribe")
+      opoo "Warning: Could not set execute permissions on holdscribe binary"
+      opoo "Users may need to run: chmod +x $(brew --prefix)/bin/holdscribe"
+    end
     
     # Also create a backup executable script with .sh extension
     (bin/"holdscribe.sh").write((bin/"holdscribe").read)
+    chmod 0755, bin/"holdscribe.sh"
+    system "chmod", "755", bin/"holdscribe.sh"
     system "chmod", "+x", bin/"holdscribe.sh"
     
     # Install HoldScribe.app bundle for persistent accessibility permissions
@@ -124,9 +134,9 @@ except Exception as e:
           <key>CFBundleDisplayName</key>
           <string>HoldScribe</string>
           <key>CFBundleVersion</key>
-          <string>1.3.4</string>
+          <string>1.3.5</string>
           <key>CFBundleShortVersionString</key>
-          <string>1.3.4</string>
+          <string>1.3.5</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>NSHighResolutionCapable</key>
@@ -195,8 +205,9 @@ except Exception as e:
          #{Tty.cyan}holdscribe#{Tty.reset}
          
          #{Tty.red}If you get 'permission denied':#{Tty.reset}
+         #{Tty.yellow}chmod +x $(brew --prefix)/bin/holdscribe#{Tty.reset}
          #{Tty.cyan}holdscribe.sh#{Tty.reset} (backup script)
-         #{Tty.cyan}chmod +x $(which holdscribe) && holdscribe#{Tty.reset}
+         #{Tty.cyan}$(brew --prefix)/bin/holdscribe#{Tty.reset} (direct path)
       
       #{Tty.green}2.#{Tty.reset} Grant accessibility permissions when prompted
       
