@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.5.tar.gz"
-  sha256 "4ec86a16a9bebc22a66946063a5f405f10ccd8795d7409026798dcf33022d82e"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.6.tar.gz"
+  sha256 "398aa42afbe5138b08cd505f55d9408b74993cd3ff9b062b9323092998bbc4d7"
   license "MIT"
-  version "1.3.5"
+  version "1.3.6"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -95,22 +95,26 @@ except Exception as e:
       exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
     
-    # Make wrapper script executable - use multiple methods to ensure it works
-    chmod 0755, bin/"holdscribe"
-    system "chmod", "755", bin/"holdscribe"
-    system "chmod", "+x", bin/"holdscribe"
+    # Use install command which should set permissions correctly
+    system "chmod", "755", bin/"holdscribe"  
+    system "install", "-m", "755", bin/"holdscribe", bin/"holdscribe.tmp"
+    system "mv", bin/"holdscribe.tmp", bin/"holdscribe"
     
-    # Verify the file was made executable
+    # Verify and show clear message during installation
     unless File.executable?(bin/"holdscribe")
-      opoo "Warning: Could not set execute permissions on holdscribe binary"
-      opoo "Users may need to run: chmod +x $(brew --prefix)/bin/holdscribe"
+      ohai "❌ IMPORTANT: Execute permissions could not be set automatically"
+      ohai "After installation completes, run this command:"
+      ohai "    chmod +x $(brew --prefix)/bin/holdscribe"
+      ohai "Then run: holdscribe"
+      ohai ""
+      ohai "This is a known issue we're working to resolve."
+    else
+      ohai "✅ Execute permissions set successfully"
     end
     
-    # Also create a backup executable script with .sh extension
+    # Create backup script with guaranteed permissions
     (bin/"holdscribe.sh").write((bin/"holdscribe").read)
-    chmod 0755, bin/"holdscribe.sh"
     system "chmod", "755", bin/"holdscribe.sh"
-    system "chmod", "+x", bin/"holdscribe.sh"
     
     # Install HoldScribe.app bundle for persistent accessibility permissions
     app_bundle = prefix/"HoldScribe.app"
@@ -134,9 +138,9 @@ except Exception as e:
           <key>CFBundleDisplayName</key>
           <string>HoldScribe</string>
           <key>CFBundleVersion</key>
-          <string>1.3.5</string>
+          <string>1.3.6</string>
           <key>CFBundleShortVersionString</key>
-          <string>1.3.5</string>
+          <string>1.3.6</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>NSHighResolutionCapable</key>
@@ -200,12 +204,15 @@ except Exception as e:
     <<~EOS
       🎤 #{Tty.bold}#{Tty.green}HoldScribe is ready to use!#{Tty.reset}
       
+      #{Tty.bold}#{Tty.red}⚠️  IMPORTANT:#{Tty.reset} If you get 'permission denied' error:
+      #{Tty.bold}#{Tty.yellow}   chmod +x $(brew --prefix)/bin/holdscribe#{Tty.reset}
+      #{Tty.bold}#{Tty.yellow}   holdscribe#{Tty.reset}
+      
       #{Tty.bold}#{Tty.blue}QUICK START:#{Tty.reset}
       #{Tty.green}1.#{Tty.reset} Run HoldScribe (automatic permission setup):
          #{Tty.cyan}holdscribe#{Tty.reset}
          
-         #{Tty.red}If you get 'permission denied':#{Tty.reset}
-         #{Tty.yellow}chmod +x $(brew --prefix)/bin/holdscribe#{Tty.reset}
+         #{Tty.dim}Alternatives if needed:#{Tty.reset}
          #{Tty.cyan}holdscribe.sh#{Tty.reset} (backup script)
          #{Tty.cyan}$(brew --prefix)/bin/holdscribe#{Tty.reset} (direct path)
       
