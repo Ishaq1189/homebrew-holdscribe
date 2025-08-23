@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.0.tar.gz"
-  sha256 "ab8d141be209b8864b18f6a94d0f2addcc54a1017e69d2fd6bb9e0bab2226165"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.1.tar.gz"
+  sha256 "a4262585619fd4d0dfe41f43c40b6a9079adcfbdc280ed9b5c23050258f7162e"
   license "MIT"
-  version "1.3.0"
+  version "1.3.1"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -185,7 +185,7 @@ except Exception as e:
         #{Tty.cyan}holdscribe --prompt-permissions#{Tty.reset}   # #{Tty.bold}Enhanced security mode#{Tty.reset}
       
       #{Tty.bold}#{Tty.green}🚀 BACKGROUND MODES:#{Tty.reset}
-        #{Tty.yellow}--background#{Tty.reset}: Quiet mode, use with & for shell backgrounding (holdscribe --background &)
+        #{Tty.yellow}--background#{Tty.reset}: Properly detached background process (no more crashes!)
         #{Tty.yellow}--daemon#{Tty.reset}:     True daemon - completely detaches from terminal
       
       #{Tty.bold}#{Tty.red}🔐 ENHANCED SECURITY MODE:#{Tty.reset}
