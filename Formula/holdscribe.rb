@@ -212,7 +212,7 @@ except Exception as e:
       #{Tty.green}1.#{Tty.reset} Run HoldScribe (automatic permission setup):
          #{Tty.cyan}holdscribe#{Tty.reset}
          
-         #{Tty.dim}Alternatives if needed:#{Tty.reset}
+         Alternatives if needed:
          #{Tty.cyan}holdscribe.sh#{Tty.reset} (backup script)
          #{Tty.cyan}$(brew --prefix)/bin/holdscribe#{Tty.reset} (direct path)
       
