@@ -199,7 +199,7 @@ except Exception as e:
       
       #{Tty.red}Hold the Right Alt key, speak, release to transcribe and paste!#{Tty.reset}
       
-      #{Tty.bold}Stop background/daemon:#{Tty.reset} pkill -f holdscribe #{Tty.dim}(or killall Python)#{Tty.reset}
+      #{Tty.bold}Stop background/daemon:#{Tty.reset} pkill -f holdscribe (or killall Python)
     EOS
   end
 
