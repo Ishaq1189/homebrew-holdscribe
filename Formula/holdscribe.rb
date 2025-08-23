@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.3.tar.gz"
-  sha256 "b47804aa3bba9a17fe8e4b45623fb8079efab60d543e4d4ca17126660715362d"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.4.tar.gz"
+  sha256 "1ddbc0624292d460fe3e50f116638cbf912d8fec503f0c9a3ebf1f04b3da23e0"
   license "MIT"
-  version "1.3.3"
+  version "1.3.4"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -22,17 +22,30 @@ class Holdscribe < Formula
     
     # Copy the main script to the virtual environment
     (libexec/"bin/holdscribe.py").write(File.read("holdscribe.py"))
-    chmod 0755, libexec/"bin/holdscribe.py"
+    # Note: permissions will be fixed by wrapper script if needed
     
     # Create wrapper script with automatic permission request
     (bin/"holdscribe").write(<<~EOS)
       #!/bin/bash
       
-      # Check if we have execute permissions
+      # Self-fix permissions if needed (solves permission denied issues)
+      if [[ ! -x "$0" ]]; then
+          chmod +x "$0" 2>/dev/null || {
+              echo "❌ Permission denied: Cannot execute holdscribe"
+              echo "Run this command to fix: chmod +x $(which holdscribe)"
+              echo "Or reinstall with: brew reinstall holdscribe"
+              exit 1
+          }
+          echo "✅ Fixed script permissions automatically"
+      fi
+      
+      # Check Python script permissions  
       if [[ ! -x "#{libexec}/bin/holdscribe.py" ]]; then
-          echo "❌ Installation error: Script not executable"
-          echo "Please reinstall with: brew reinstall holdscribe"
-          exit 1
+          chmod +x "#{libexec}/bin/holdscribe.py" 2>/dev/null || {
+              echo "❌ Installation error: Cannot fix Python script permissions"
+              echo "Please reinstall with: brew reinstall holdscribe"
+              exit 1
+          }
       fi
       
       # Function to check and request accessibility permissions
@@ -82,12 +95,12 @@ except Exception as e:
       exec "#{libexec}/bin/python" "#{libexec}/bin/holdscribe.py" "$@"
     EOS
     
-    # Make wrapper script executable  
-    chmod 0755, bin/"holdscribe"
+    # Make wrapper script executable using system command (Homebrew chmod sometimes fails)  
+    system "chmod", "+x", bin/"holdscribe"
     
-    # Verify permissions were set correctly
-    ohai "Setting execute permissions on wrapper script"
-    system "chmod", "755", bin/"holdscribe"
+    # Also create a backup executable script with .sh extension
+    (bin/"holdscribe.sh").write((bin/"holdscribe").read)
+    system "chmod", "+x", bin/"holdscribe.sh"
     
     # Install HoldScribe.app bundle for persistent accessibility permissions
     app_bundle = prefix/"HoldScribe.app"
@@ -111,9 +124,9 @@ except Exception as e:
           <key>CFBundleDisplayName</key>
           <string>HoldScribe</string>
           <key>CFBundleVersion</key>
-          <string>1.3.3</string>
+          <string>1.3.4</string>
           <key>CFBundleShortVersionString</key>
-          <string>1.3.3</string>
+          <string>1.3.4</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>NSHighResolutionCapable</key>
@@ -180,6 +193,10 @@ except Exception as e:
       #{Tty.bold}#{Tty.blue}QUICK START:#{Tty.reset}
       #{Tty.green}1.#{Tty.reset} Run HoldScribe (automatic permission setup):
          #{Tty.cyan}holdscribe#{Tty.reset}
+         
+         #{Tty.red}If you get 'permission denied':#{Tty.reset}
+         #{Tty.cyan}holdscribe.sh#{Tty.reset} (backup script)
+         #{Tty.cyan}chmod +x $(which holdscribe) && holdscribe#{Tty.reset}
       
       #{Tty.green}2.#{Tty.reset} Grant accessibility permissions when prompted
       
