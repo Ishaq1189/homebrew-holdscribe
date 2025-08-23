@@ -178,8 +178,13 @@ except Exception as e:
         #{Tty.cyan}holdscribe#{Tty.reset}                         # Interactive mode (Right Alt key)
         #{Tty.cyan}holdscribe --key f8#{Tty.reset}               # Use F8 key instead
         #{Tty.cyan}holdscribe --model tiny#{Tty.reset}           # Faster/smaller AI model
-        #{Tty.cyan}holdscribe --background#{Tty.reset}           # #{Tty.bold}Background mode (recommended)#{Tty.reset}
+        #{Tty.cyan}holdscribe --background#{Tty.reset}           # #{Tty.bold}Background mode (improved)#{Tty.reset}
+        #{Tty.cyan}holdscribe --daemon#{Tty.reset}               # #{Tty.bold}True daemon mode#{Tty.reset}
         #{Tty.cyan}holdscribe --prompt-permissions#{Tty.reset}   # #{Tty.bold}Enhanced security mode#{Tty.reset}
+      
+      #{Tty.bold}#{Tty.green}🚀 BACKGROUND MODES:#{Tty.reset}
+        #{Tty.yellow}--background#{Tty.reset}: Better background mode with minimal terminal interaction
+        #{Tty.yellow}--daemon#{Tty.reset}:     True daemon - completely detaches from terminal
       
       #{Tty.bold}#{Tty.red}🔐 ENHANCED SECURITY MODE:#{Tty.reset}
         The #{Tty.yellow}--prompt-permissions#{Tty.reset} flag provides extra security by asking
@@ -188,12 +193,13 @@ except Exception as e:
       
       #{Tty.bold}#{Tty.magenta}💡 PRO TIP:#{Tty.reset} Add to your shell profile:
          echo "alias hs='holdscribe --background'" >> ~/.zshrc
+         echo "alias hsd='holdscribe --daemon'" >> ~/.zshrc
          echo "alias hss='holdscribe --prompt-permissions'" >> ~/.zshrc
-         # Then just run: hs (background) or hss (secure mode)
+         # Then: hs (background), hsd (daemon), hss (secure mode)
       
       #{Tty.red}Hold the Right Alt key, speak, release to transcribe and paste!#{Tty.reset}
       
-      Stop background: killall Python
+      #{Tty.bold}Stop background/daemon:#{Tty.reset} pkill -f holdscribe #{Tty.dim}(or killall Python)#{Tty.reset}
     EOS
   end
 
