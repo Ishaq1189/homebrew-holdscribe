@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.2.0.tar.gz"
-  sha256 "c20b079576b0d4da52f4e3fc7ee2d62a144ab0728964598e6bfb418c1062837d"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.2.1.tar.gz"
+  sha256 "87e069ba7bf008172c6c8b5bc9247e3215d9ea5e5155343b4b475b75681c7d8d"
   license "MIT"
-  version "1.2.0"
+  version "1.2.1"
 
   depends_on "python@3.11"
   depends_on "portaudio"
