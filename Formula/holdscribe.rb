@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.1.tar.gz"
-  sha256 "a4262585619fd4d0dfe41f43c40b6a9079adcfbdc280ed9b5c23050258f7162e"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.2.tar.gz"
+  sha256 "0190332c50c86091bb8ec2bc648d7bda0fa89a18da60e7bba408b3d689a6d89d"
   license "MIT"
-  version "1.3.1"
+  version "1.3.2"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -22,10 +22,18 @@ class Holdscribe < Formula
     
     # Copy the main script to the virtual environment
     (libexec/"bin/holdscribe.py").write(File.read("holdscribe.py"))
+    chmod 0755, libexec/"bin/holdscribe.py"
     
     # Create wrapper script with automatic permission request
     (bin/"holdscribe").write(<<~EOS)
       #!/bin/bash
+      
+      # Check if we have execute permissions
+      if [[ ! -x "#{libexec}/bin/holdscribe.py" ]]; then
+          echo "❌ Installation error: Script not executable"
+          echo "Please reinstall with: brew reinstall holdscribe"
+          exit 1
+      fi
       
       # Function to check and request accessibility permissions
       check_accessibility() {
@@ -99,9 +107,9 @@ except Exception as e:
           <key>CFBundleDisplayName</key>
           <string>HoldScribe</string>
           <key>CFBundleVersion</key>
-          <string>1.0.0</string>
+          <string>1.3.2</string>
           <key>CFBundleShortVersionString</key>
-          <string>1.0.0</string>
+          <string>1.3.2</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>NSHighResolutionCapable</key>
