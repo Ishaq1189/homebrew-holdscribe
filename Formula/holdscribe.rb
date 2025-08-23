@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "29e78916878d825cf8e7545130f032b2aeb4edbd9a5bc82d7fb4371f47034903"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.2.0.tar.gz"
+  sha256 "c20b079576b0d4da52f4e3fc7ee2d62a144ab0728964598e6bfb418c1062837d"
   license "MIT"
-  version "1.1.0"
+  version "1.2.0"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -177,9 +177,10 @@ except Exception as e:
       
       #{Tty.bold}#{Tty.blue}USAGE:#{Tty.reset}
         #{Tty.cyan}holdscribe#{Tty.reset}                         # Interactive mode (Right Alt key)
+        #{Tty.cyan}holdscribe --version#{Tty.reset}              # Show current version
         #{Tty.cyan}holdscribe --key f8#{Tty.reset}               # Use F8 key instead
         #{Tty.cyan}holdscribe --model tiny#{Tty.reset}           # Faster/smaller AI model
-        #{Tty.cyan}holdscribe --background#{Tty.reset}           # #{Tty.bold}Background mode (improved)#{Tty.reset}
+        #{Tty.cyan}holdscribe --background#{Tty.reset}           # #{Tty.bold}Background mode (fixed forking)#{Tty.reset}
         #{Tty.cyan}holdscribe --daemon#{Tty.reset}               # #{Tty.bold}True daemon mode#{Tty.reset}
         #{Tty.cyan}holdscribe --prompt-permissions#{Tty.reset}   # #{Tty.bold}Enhanced security mode#{Tty.reset}
       
