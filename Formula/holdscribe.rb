@@ -175,14 +175,21 @@ except Exception as e:
          # Disables ESC exit, runs continuously
       
       #{Tty.bold}#{Tty.blue}USAGE:#{Tty.reset}
-        #{Tty.cyan}holdscribe#{Tty.reset}                    # Interactive mode (Right Alt key)
-        #{Tty.cyan}holdscribe --key f8#{Tty.reset}          # Use F8 key instead
-        #{Tty.cyan}holdscribe --model tiny#{Tty.reset}      # Faster/smaller AI model
-        #{Tty.cyan}holdscribe --background#{Tty.reset}      # #{Tty.bold}Background mode (recommended)#{Tty.reset}
+        #{Tty.cyan}holdscribe#{Tty.reset}                         # Interactive mode (Right Alt key)
+        #{Tty.cyan}holdscribe --key f8#{Tty.reset}               # Use F8 key instead
+        #{Tty.cyan}holdscribe --model tiny#{Tty.reset}           # Faster/smaller AI model
+        #{Tty.cyan}holdscribe --background#{Tty.reset}           # #{Tty.bold}Background mode (recommended)#{Tty.reset}
+        #{Tty.cyan}holdscribe --prompt-permissions#{Tty.reset}   # #{Tty.bold}Enhanced security mode#{Tty.reset}
+      
+      #{Tty.bold}#{Tty.red}🔐 ENHANCED SECURITY MODE:#{Tty.reset}
+        The #{Tty.yellow}--prompt-permissions#{Tty.reset} flag provides extra security by asking
+        for your consent before each recording session. Perfect for
+        shared systems or security-conscious users.
       
       #{Tty.bold}#{Tty.magenta}💡 PRO TIP:#{Tty.reset} Add to your shell profile:
          echo "alias hs='holdscribe --background'" >> ~/.zshrc
-         # Then just run: hs
+         echo "alias hss='holdscribe --prompt-permissions'" >> ~/.zshrc
+         # Then just run: hs (background) or hss (secure mode)
       
       #{Tty.red}Hold the Right Alt key, speak, release to transcribe and paste!#{Tty.reset}
       
