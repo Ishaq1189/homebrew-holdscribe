@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.6.tar.gz"
-  sha256 "398aa42afbe5138b08cd505f55d9408b74993cd3ff9b062b9323092998bbc4d7"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.7.tar.gz"
+  sha256 "651dcecd913326877575c04524becaf195ef3f1172e7114012a5ede3666ff7ca"
   license "MIT"
-  version "1.3.6"
+  version "1.3.7"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -138,9 +138,9 @@ except Exception as e:
           <key>CFBundleDisplayName</key>
           <string>HoldScribe</string>
           <key>CFBundleVersion</key>
-          <string>1.3.6</string>
+          <string>1.3.7</string>
           <key>CFBundleShortVersionString</key>
-          <string>1.3.6</string>
+          <string>1.3.7</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>NSHighResolutionCapable</key>
