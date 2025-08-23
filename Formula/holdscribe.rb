@@ -1,10 +1,10 @@
 class Holdscribe < Formula
   desc "Push-to-talk voice transcription tool. Hold a key, speak, release to transcribe and paste"
   homepage "https://github.com/ishaq1189/holdscribe"
-  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.2.tar.gz"
-  sha256 "0190332c50c86091bb8ec2bc648d7bda0fa89a18da60e7bba408b3d689a6d89d"
+  url "https://github.com/Ishaq1189/holdscribe/archive/refs/tags/v1.3.3.tar.gz"
+  sha256 "b47804aa3bba9a17fe8e4b45623fb8079efab60d543e4d4ca17126660715362d"
   license "MIT"
-  version "1.3.2"
+  version "1.3.3"
 
   depends_on "python@3.11"
   depends_on "portaudio"
@@ -85,6 +85,10 @@ except Exception as e:
     # Make wrapper script executable  
     chmod 0755, bin/"holdscribe"
     
+    # Verify permissions were set correctly
+    ohai "Setting execute permissions on wrapper script"
+    system "chmod", "755", bin/"holdscribe"
+    
     # Install HoldScribe.app bundle for persistent accessibility permissions
     app_bundle = prefix/"HoldScribe.app"
     app_bundle.mkpath
@@ -107,9 +111,9 @@ except Exception as e:
           <key>CFBundleDisplayName</key>
           <string>HoldScribe</string>
           <key>CFBundleVersion</key>
-          <string>1.3.2</string>
+          <string>1.3.3</string>
           <key>CFBundleShortVersionString</key>
-          <string>1.3.2</string>
+          <string>1.3.3</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>NSHighResolutionCapable</key>
